@@ -32,3 +32,11 @@ $minimal_apt_get_install software-properties-common
 
 ## Upgrade all packages.
 apt-get dist-upgrade -y --no-install-recommends
+
+## Fix locale.
+$minimal_apt_get_install locales
+run sed -i '/^#.*en_US.UTF-8 UTF-8/s/^#\s*//' /etc/locale.gen
+locale-gen en_US
+update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
+echo -n en_US.UTF-8 > /etc/container_environment/LANG
+echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
